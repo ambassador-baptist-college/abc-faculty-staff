@@ -6,6 +6,7 @@
  * Version: 1.0.0
  * Author: AndrewRMinion Design
  * Author URI: https://andrewrminion.com
+ * GitHub Plugin URI: https://github.com/ambassador-baptist-college/abc-faculty-staff/
  */
 
 if (!defined('ABSPATH')) {
