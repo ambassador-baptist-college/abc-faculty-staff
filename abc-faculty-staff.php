@@ -44,7 +44,7 @@ function faculty_staff_post_type() {
         'filter_items_list'     => 'Filter faculty members list',
     );
     $rewrite = array(
-        'slug'                  => 'about-us/faculty-and-staff/',
+        'slug'                  => 'about-us/faculty-and-staff',
         'with_front'            => true,
         'pages'                 => true,
         'feeds'                 => true,
@@ -64,7 +64,7 @@ function faculty_staff_post_type() {
         'show_in_admin_bar'     => true,
         'show_in_nav_menus'     => true,
         'can_export'            => true,
-        'has_archive'           => 'faculty-staff',
+        'has_archive'           => 'about-us/faculty-and-staff',
         'exclude_from_search'   => false,
         'publicly_queryable'    => true,
         'rewrite'               => $rewrite,
@@ -142,3 +142,26 @@ function abc_faculty_register_backend_js() {
     }
 }
 add_action( 'admin_enqueue_scripts', 'abc_faculty_register_backend_js' );
+
+// Use the same slug for post type and taxonomy
+function generate_faculty_taxonomy_rewrite_rules( $wp_rewrite ) {
+    $rules = array();
+    $post_types = get_post_types( array( 'public' => true, '_builtin' => false ), 'objects' );
+    $taxonomies = get_taxonomies( array( 'public' => true, '_builtin' => false ), 'objects' );
+
+    foreach ( $post_types as $post_type ) {
+        $post_type_name = $post_type->name; // 'developer'
+        $post_type_slug = $post_type->rewrite['slug']; // 'developers'
+
+        foreach ( $taxonomies as $taxonomy ) {
+            if ( $taxonomy->object_type[0] == $post_type_name ) {
+                $terms = get_categories( array( 'type' => $post_type_name, 'taxonomy' => $taxonomy->name, 'hide_empty' => 0 ) );
+                foreach ( $terms as $term ) {
+                    $rules[$post_type_slug . '/' . $term->slug . '/?$'] = 'index.php?' . $term->taxonomy . '=' . $term->slug;
+                }
+            }
+        }
+    }
+    $wp_rewrite->rules = $rules + $wp_rewrite->rules;
+}
+add_action('generate_rewrite_rules', 'generate_faculty_taxonomy_rewrite_rules');
