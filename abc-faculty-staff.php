@@ -117,7 +117,7 @@ add_action( 'init', 'faculty_categories', 0 );
 // Add custom archive template
 function get_faculty_archive_template( $archive_template ) {
      global $post;
-     if ( is_post_type_archive ( 'meeting' ) || is_tax( 'faculty-category' ) ) {
+     if ( is_post_type_archive ( 'faculty' ) || is_tax( 'faculty-category' ) ) {
           $archive_template = dirname( __FILE__ ) . '/archive-faculty.php';
      }
      return $archive_template;
