@@ -165,3 +165,13 @@ function generate_faculty_taxonomy_rewrite_rules( $wp_rewrite ) {
     $wp_rewrite->rules = $rules + $wp_rewrite->rules;
 }
 add_action('generate_rewrite_rules', 'generate_faculty_taxonomy_rewrite_rules');
+
+// Modify the page title
+function filter_faculty_page_title( $title, $id = NULL ) {
+    if ( is_post_type_archive( 'faculty' ) ) {
+          $title = 'Faculty and Staff';
+    }
+
+    return $title;
+}
+add_filter( 'custom_title', 'filter_faculty_page_title' );
