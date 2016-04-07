@@ -125,14 +125,9 @@ function get_faculty_archive_template( $archive_template ) {
 add_filter( 'archive_template', 'get_faculty_archive_template' ) ;
 add_filter( 'taxonomy_archive', 'get_faculty_archive_template' ) ;
 
-// Sort by beginning date ascending
-function sort_faculty( $query ) {
-    if ( ( isset($query->query_vars['post_type']) && $query->query_vars['post_type'] == 'faculty' ) || ( isset($query->query_vars['faculty-category']) ) ) {
-        $query->set( 'posts_per_page', -1 );
-        $query->set( 'order', 'ASC' );
-    }
-}
-add_filter( 'pre_get_posts', 'sort_faculty' );
+// Register custom image sizes
+add_image_size( 'faculty', 150, 200, true );
+add_image_size( 'faculty_large', 300, 400, true );
 
 // Register backend script
 function abc_faculty_register_backend_js() {
