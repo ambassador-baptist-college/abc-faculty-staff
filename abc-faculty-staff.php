@@ -127,7 +127,21 @@ add_filter( 'taxonomy_archive', 'get_faculty_archive_template' ) ;
 
 // Register custom image sizes
 add_image_size( 'faculty', 150, 200, true );
-add_image_size( 'faculty_large', 300, 400, true );
+add_image_size( 'faculty_l', 300, 400, true );
+add_image_size( 'faculty_xl', 600, 800, true );
+add_image_size( 'faculty_xxl', 900, 1200, true );
+
+// Add named custom image sizes
+function faculty_named_image_sizes( $sizes ) {
+    $new_sizes = array(
+        'faculty'       => 'Portrait (small)',
+        'faculty_l'     => 'Portrait (medium)',
+        'faculty_xl'    => 'Portrait (large)',
+        'faculty_xxl'   => 'Portrait (full)',
+    );
+    return array_merge( $sizes, $new_sizes );
+}
+add_filter( 'image_size_names_choose', 'faculty_named_image_sizes' );
 
 // Register backend script
 function abc_faculty_register_backend_js() {
