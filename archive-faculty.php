@@ -22,29 +22,10 @@ get_header(); ?>
         <main id="main" class="site-main" role="main">
 
         <?php if ( have_posts() ) : ?>
-            <header class="page-header">
-                <h1 class="page-title">
-                <?php
-                    if ( is_taxonomy( 'type' ) ) {
-                        $term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) );
-                        echo $term->name;
-                    } elseif ( is_post_type_archive( 'faculty' ) ) {
-                        echo 'Faculty and Staff';
-                    }
-                ?>
-                </h1>
-                <?php
-                    if ( is_taxonomy( 'type' ) ) {
-                        echo '<p><a href="' . home_url() . '/about-us/faculty-and-staff/">Back to all faculty and staff</a></p>';
-                    }
-                    the_archive_description( '<div class="taxonomy-description">', '</div>' );
-                ?>
-            </header><!-- .page-header -->
-
-        <?php
-            include( 'includes/faculty-staff.php' );
-        endif;
-        ?>
+            <div class="entry-content">
+            <?php include( 'includes/faculty-staff.php' ); ?>
+            </div>
+        <?php endif; ?>
 
         </main><!-- .site-main -->
     </div><!-- .content-area -->
