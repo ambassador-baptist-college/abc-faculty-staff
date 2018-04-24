@@ -184,3 +184,15 @@ function filter_faculty_page_title( $title, $id = NULL ) {
     return $title;
 }
 add_filter( 'custom_title', 'filter_faculty_page_title' );
+
+// Add content to single
+function faculty_single_content( $content ) {
+    if ( is_singular( 'faculty' ) ) {
+        ob_start();
+        include 'includes/single-faculty.php';
+        $content .= ob_get_clean();
+    }
+
+    return $content;
+}
+add_filter( 'the_content', 'faculty_single_content' );
